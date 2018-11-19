@@ -6,5 +6,6 @@ Docker image base on emeraldsquad/alpine-scripting with Cloud foundry cli versio
 
 CF plugins:
 
-* PCF scheduler cli 1.1.0 
+* PCF scheduler cli 1.1.0
+* PCF App Autoscaler cli 2.0.40
 
