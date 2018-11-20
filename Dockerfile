@@ -1,6 +1,6 @@
 FROM emeraldsquad/alpine-scripting
 
-ENV CF_CLI_VERSION=6.38.0
+ENV CF_CLI_VERSION=6.40.1
 ENV PCF_SCHEDULER=scheduler-for-pcf-cliplugin-linux32-binary-1.1.0
 ENV PCF_AUTOSCALER=autoscaler-for-pcf-cliplugin-linux32-binary-2.0.40
 
