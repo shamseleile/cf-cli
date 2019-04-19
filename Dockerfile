@@ -48,3 +48,8 @@ RUN cf install-plugin -f ${PCF_SCHEDULER} \
 ENV PATH $PATH:$JMETER_BIN
 
 COPY launch.sh /
+
+#9
+WORKDIR ${JMETER_HOME}
+#10
+ENTRYPOINT ["/launch.sh"]
