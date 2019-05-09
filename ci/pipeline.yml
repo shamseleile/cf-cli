@@ -20,14 +20,15 @@ resource_types:
 # ======================================================================================================================
 resources:
 # Scan Artifactory pour une nouvelle version du "artifact-id" a deployer
-- name: artifactory-release
-  type: artifactory
-  source:
-    host: {{artifactory-url}}
-    api_key: ((artifactory-api-key))
-    repository_id: release-local
-    group_id: ((groupId))
-    artifact_id: ((artifactId))
+  - name: artifactory-rc
+    type: artifactory
+    source:
+      host: {{artifactory-url}}
+      api_key: ((artifactory-api-key))
+      repository_id: release-candidates-local
+      group_id: ((groupId))
+      artifact_id: ((artifactId))
+
 # Depot pour les Configuration de l'infrastructure
 - name: git-((artifactId))-((branche))
   type: git
@@ -55,10 +56,16 @@ jobs:
         input_mapping:
           repo: git-((artifactId))-((branche))
         file: git-((artifactId))-((branche))/ci/tasks/run-jmeter.yml
+        params:
+          NOM_PLAN_TEST: "repo/ci/newman/((newman-fichier-data-get))"
+          POST_DATA_URL: "repo/ci/newman/((newman-fichier-data-post))"
+          ENVIRONMENT_URL: "repo/ci/newman/((newman-fichier-environnement))"
+          COLLECTION_URL: "repo/ci/newman/((newman-fichier-collection))"
+          ARTIFACT_ID: ((artifactId))
       - put: artifactory-rc
         params:
            path: reports
-           qualifiers: [results-newman]
+           qualifiers: [results-jmeter]
    on_failure:
       put: send-an-email
       params:

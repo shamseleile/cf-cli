@@ -5,10 +5,13 @@
 #   domaine = exemple
 #   sous-domaine = microservice
 
+artifactory-url: 'https://artifacts.cfzcea.dev.desjardins.com/artifactory'
+
 # PCF
 pcf-api: 'https://api.system.cfzcea.dev.desjardins.com'
 pcf-org: 'dist-fin-autorisation-org'
 pcf-user: 'dist-fin-autorisation-ciuser'
+
 
 # DEFINITION PROJET
 domaine: dist-fin
