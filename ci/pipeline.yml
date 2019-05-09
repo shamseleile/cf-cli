@@ -1,0 +1,75 @@
+
+########################################################################
+# RESOURCE_TYPES
+########################################################################
+resource_types:
+  - name: artifactory
+    type: docker-image
+    source:
+      repository: emeraldsquad/artifactory-resource
+
+  - name: cf-zero-downtime-resource
+    type: docker-image
+    source:
+      repository: emeraldsquad/cf-zero-downtime-resource
+      tag: 0.3.2
+
+
+# ======================================================================================================================
+#                                                 RESSOURCE
+# ======================================================================================================================
+resources:
+# Scan Artifactory pour une nouvelle version du "artifact-id" a deployer
+- name: artifactory-release
+  type: artifactory
+  source:
+    host: {{artifactory-url}}
+    api_key: ((artifactory-api-key))
+    repository_id: release-local
+    group_id: ((groupId))
+    artifact_id: ((artifactId))
+# Depot pour les Configuration de l'infrastructure
+- name: git-((artifactId))-((branche))
+  type: git
+  webhook_token: ((webhook-token))
+  source:
+    uri: ssh://git@git.cfzcea.dev.desjardins.com:7999/((domaine))-((sous-domaine))/((depotGit)).git
+    branch: ((branche))
+    private_key: ((git-key))   
+
+
+
+
+# ======================================================================================================================
+#                                                 JOBS
+# ======================================================================================================================
+jobs:
+ - name: run-tests-charge-jmeter
+   plan:
+      - get: git-((artifactId))-((branche))
+        passed: [deploy-master]
+      - get: artifactory-rc
+        trigger: true
+        passed: [deploy-master]
+      - task: run-newman-test
+        input_mapping:
+          repo: git-((artifactId))-((branche))
+        file: git-((artifactId))-((branche))/ci/tasks/run-jmeter.yml
+      - put: artifactory-rc
+        params:
+           path: reports
+           qualifiers: [results-newman]
+   on_failure:
+      put: send-an-email
+      params:
+         subject_text: "Test newman ${BUILD_PIPELINE_NAME} en erreur"
+         body_text: |
+           Une erreur est survenue lors de l'execution de ${BUILD_JOB_NAME} dans le pipeline ${BUILD_PIPELINE_NAME}.
+           Vous pouvez consulter les journaux sur https://ci.cfzcea.dev.desjardins.com/builds/${BUILD_ID}   
+# ======================================================================================================================
+#                                                 GROUPS
+# ======================================================================================================================
+groups:
+- name: lancement du test de charge
+  jobs:
+  - run-tests-charge-jmeter

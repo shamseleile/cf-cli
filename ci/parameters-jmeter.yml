@@ -1,0 +1,26 @@
+# ======================================================================================================================
+#                                                 APP VARS
+# ======================================================================================================================
+# Pour information
+#   domaine = exemple
+#   sous-domaine = microservice
+
+# PCF
+pcf-api: 'https://api.system.cfzcea.dev.desjardins.com'
+pcf-org: 'dist-fin-autorisation-org'
+pcf-user: 'dist-fin-autorisation-ciuser'
+
+# DEFINITION PROJET
+domaine: dist-fin
+sous-domaine: autorisation
+groupId: com.desjardins.distfinautorisation
+artifactId: distribution-financement-autorisation-accordd
+depotGit: distribution-financement-autorisation-accordd-qa
+courriel-alertage: jean-bernard.gallo@desjardins.com
+
+# URL
+bitbucket-host: https://git.cfzcea.dev.desjardins.com
+artifactory-url: 'https://artifacts.cfzcea.dev.desjardins.com/artifactory'
+
+# BRANCHE
+branche: dev
