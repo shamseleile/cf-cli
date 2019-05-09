@@ -45,6 +45,8 @@ RUN cf install-plugin -f ${PCF_SCHEDULER} \
   && cf plugins \
   && rm -f ${PCF_SCHEDULER} \
   && rm -f ${PCF_AUTOSCALER}
+ 
+COPY  jmeter-plugins/  /${JMETER_PLUGINS_FOLDER}/
 
-COPY launch.sh /
+
 
