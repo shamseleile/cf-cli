@@ -12,6 +12,7 @@ ENV MIRROR_HOST http://mirrors.ocf.berkeley.edu/apache/jmeter
 ENV JMETER_DOWNLOAD_URL ${MIRROR_HOST}/binaries/apache-jmeter-${JMETER_VERSION}.tgz
 ENV JMETER_PLUGINS_DOWNLOAD_URL https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
 ENV JMETER_PLUGINS_FOLDER ${JMETER_HOME}/lib/ext/
+ENV PATH $PATH:$JMETER_BIN
 
 RUN apk add --no-cache python3 py-yaml && \
     python3 -m ensurepip && \
@@ -44,8 +45,6 @@ RUN cf install-plugin -f ${PCF_SCHEDULER} \
   && cf plugins \
   && rm -f ${PCF_SCHEDULER} \
   && rm -f ${PCF_AUTOSCALER}
-
-ENV PATH $PATH:$JMETER_BIN
 
 COPY launch.sh /
 
