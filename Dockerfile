@@ -52,7 +52,6 @@ COPY  jmeter-plugins/  /${JMETER_PLUGINS_FOLDER}/
 COPY  jmeter-lib/  /${JMETER_PLUGINS_LIB_FOLDER}/
 COPY  jmeter-bin/  /${JMETER_BIN}/
 
-RUN .${JMETER_BIN}/PluginsManagerCMD.sh install jpgc-casutg
 
 
 
