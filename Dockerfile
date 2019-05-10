@@ -49,7 +49,6 @@ RUN cf install-plugin -f ${PCF_SCHEDULER} \
  
 COPY  jmeter-plugins/  /${JMETER_PLUGINS_LIB_FOLDER}/
 
-RUN java -cp .${JMETER_PLUGINS_FOLDER}/jmeter-plugins-manager-0.11.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
 RUN .${JMETER_BIN}/PluginsManagerCMD.sh install jpgc-casutg
 
 
