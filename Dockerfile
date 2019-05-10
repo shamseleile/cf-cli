@@ -35,6 +35,7 @@ RUN apk add --no-cache python3 py-yaml && \
 
 RUN wget -q -O - 'https://cli.run.pivotal.io/stable?release=linux64-binary&source=github&version='${CF_CLI_VERSION} \
         | tar -xzf - -C /usr/bin
+	
 
 
 RUN curl -L --silent https://mvnrepository.com/artifact/kg.apc/jmeter-plugins-casutg/jmeter-plugins-casutg-2.8.jar  -o ${JMETER_PLUGINS_FOLDER}/jmeter-plugins-casutg-2.8.jar
